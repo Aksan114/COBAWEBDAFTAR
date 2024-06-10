@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Peminjaman</title>
+    <link rel="stylesheet" href="/static/edit.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Peminjaman</h2>
+        <hr>
+        <form action="/update" method="POST">
+            <input type="hidden" name="id" value="{{ .zz.ID }}">
+            <div>
+                <label for="nama_buku">Nama Buku</label>
+                <input type="text" id="nama_buku" name="name" autocomplete="off" value="{{ .zz.Nama_buku }}">
+            </div>
+            <div>
+                <label for="nama_peminjam">Nama Peminjam</label>
+                <input type="text" id="nama_peminjam" name="nama" autocomplete="off" value="{{ .zz.Nama_peminjam }}">
+            </div>
+            <div>
+                <a href="/" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

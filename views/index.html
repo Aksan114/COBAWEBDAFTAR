@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB PEMINJAMAN BUKU</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>WEB PEMINJAMAN BUKU</h1>
+        <a href="/create" class="add">Pinjam Buku</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>NAMA BUKU</th>
+                    <th>WAKTU PENGAMBILAN</th>
+                    <th>NAMA PEMINJAM</th>
+                    <th>SALAH INPUT DATA</th>
+                    <th>KETERANGAN</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range .cat }}
+                <tr>
+                    <td>{{ .Nama_buku }}</td>
+                    <td>{{ .Waktu_pengambilan }}</td>
+                    <td>{{ .Nama_peminjam }}</td>
+                    <td>
+                        <a href="/update?id={{ .ID }}" class="btn btn-warning">Edit Data</a>
+                    </td>
+                    <td>
+                        <a href="/delete?id={{ .ID }}" class="btn btn-danger" 
+                            onclick="return confirm('Ingin segera mengembalikan buku?')">Kembalikan</a>
+                    </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
