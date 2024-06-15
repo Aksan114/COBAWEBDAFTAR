@@ -9,7 +9,8 @@ import (
 	"time"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
+
+func Haldepan(w http.ResponseWriter, r *http.Request) {
 	cat := models.See()
 
 	data := map[string]any{
@@ -26,7 +27,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func Create(w http.ResponseWriter, r *http.Request)  {
+
+func Buat(w http.ResponseWriter, r *http.Request)  {
 	if r.Method == "GET" {
 		temp, err := template.ParseFiles("views/created.html")
 
@@ -55,8 +57,9 @@ func Create(w http.ResponseWriter, r *http.Request)  {
 		}
 		http.Redirect(w, r ,"/", http.StatusSeeOther)
 	}
-
 }
+
+
 func Update(w http.ResponseWriter, r *http.Request)  {
 	if  r.Method == "GET" {
 		temp, err :=template.ParseFiles(("views/edit.html"))
@@ -103,7 +106,7 @@ func Update(w http.ResponseWriter, r *http.Request)  {
 }
 
 
-func Delete(w http.ResponseWriter, r *http.Request)  {
+func Selesai(w http.ResponseWriter, r *http.Request)  {
 	idString := r.URL.Query().Get("id")
 	id, err := strconv.Atoi(idString)
 	
@@ -116,4 +119,10 @@ func Delete(w http.ResponseWriter, r *http.Request)  {
 	}
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+
+func Serverhandlestatic() {
+    anu := http.FileServer(http.Dir("./static"))
+    http.Handle("/static/", http.StripPrefix("/static/", anu))
 }

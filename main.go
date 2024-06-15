@@ -9,16 +9,15 @@ import (
 func main() {
 	config.GetConnection()
 
-	http.HandleFunc("/", controller.Index)
+	http.HandleFunc("/", controller.Haldepan)
 
-	http.HandleFunc("/create",controller.Create)
+	http.HandleFunc("/create",controller.Buat)
 
 	http.HandleFunc("/update",controller.Update)
 
-	http.HandleFunc("/delete",controller.Delete)
+	http.HandleFunc("/delete",controller.Selesai)
 
-	fs := http.FileServer(http.Dir("./static"))
-    http.Handle("/static/", http.StripPrefix("/static/", fs))
+	controller.Serverhandlestatic()
 
 	http.ListenAndServe(":8080", nil)
 }
