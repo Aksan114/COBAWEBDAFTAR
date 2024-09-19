@@ -9,11 +9,9 @@ import (
 var DB  *sql.DB
 
 func GetConnection() {
-	db, _ := sql.Open("mysql", "root:@tcp/tugas2?parseTime=true")
+	db, _ := sql.Open("mysql", "root:@tcp/pendaftaran?")
 
 	if err := db.Ping(); err != nil {
-		// print("gagal koneksi boss")
-		// return
 		panic(err)
 	}
 	print("koneksi berhasil")

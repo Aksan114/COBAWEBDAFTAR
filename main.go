@@ -9,13 +9,21 @@ import (
 func main() {
 	config.GetConnection()
 
-	http.HandleFunc("/", controller.Haldepan)
+	http.HandleFunc("/index", controller.Haldepan)
+
+	http.HandleFunc("/", controller.Home)
+
+	http.HandleFunc("/information-pro", controller.Information)
+
+	http.HandleFunc("/information-jdwl", controller.Informationjdwl)
+
+	http.HandleFunc("/information-pggmn", controller.Informationpnggmn)
 
 	http.HandleFunc("/create",controller.Buat)
 
-	http.HandleFunc("/update",controller.Update)
-
 	http.HandleFunc("/delete",controller.Selesai)
+
+	http.HandleFunc("/image", controller.ShowImage)
 
 	controller.Serverhandlestatic()
 

@@ -3,81 +3,67 @@ package models
 import (
 	"golang/config"
 	"golang/entities"
+	"log"
 )
 
 func See() []entities.User {
-	query, err := config.DB.Query("SELECT * FROM  tugas2")
-
+	query, err := config.DB.Query("SELECT * FROM users")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	defer query.Close()
 
-	var category []entities.User
+	var users []entities.User
 
 	for query.Next() {
-		var cat entities.User
-		if err := query.Scan(&cat.ID, &cat.Nama_buku, &cat.Waktu_pengambilan, &cat.Nama_peminjam,
-			); err != nil {
-			panic(err)
+		var user entities.User
+		err := query.Scan(&user.ID, &user.NAMA, &user.SEMESTER, &user.ASAL_KAMPUS, &user.Gambar)
+		if err != nil {
+			log.Fatal(err)
 		}
 
-		category = append(category, cat)
+		users = append(users, user)
 	}
 
-	return category
+	return users
 }
 
-func Create(category entities.User) bool {
-	res, err := config.DB.Exec("INSERT INTO tugas2(Nama_buku, Waktu_pengambilan, NAma_peminjam) VALUES (?,?,?)",
-		category.Nama_buku,
-		category.Waktu_pengambilan,
-		category.Nama_peminjam,
+func Create(user entities.User) bool {
+	res, err := config.DB.Exec("INSERT INTO users (NAMA, SEMESTER, ASAL_KAMPUS, Gambar) VALUES (?, ?, ?, ?)",
+		user.NAMA,
+		user.SEMESTER,
+		user.ASAL_KAMPUS,
+		user.Gambar,
 	)
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
+		return false
 	}
 
-	lastinsertid, err := res.LastInsertId()
+	lastInsertID, err := res.LastInsertId()
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
+		return false
 	}
 
-	return lastinsertid > 0
-}
-func Update(id int, category entities.User) bool  {
-	res, err := config.DB.Exec("UPDATE tugas2 set Nama_buku=?, Nama_peminjam =? WHERE ID = ?",
-	category.Nama_buku,
-	category.Nama_peminjam,
-	id,
-	)
-
-	if err != nil {
-		panic(err)
-	}
-
-	result, err := res.RowsAffected()
-	if err != nil {
-		panic(err)
-	}
-
-	return result > 0
+	return lastInsertID > 0
 }
 
-func Detail(Id int)entities.User{
-	row := config.DB.QueryRow("SELECT ID, Nama_buku, Nama_peminjam FROM tugas2 WHERE ID = ?", Id)
-
-	var cat entities.User
-	if err := row.Scan(&cat.ID, &cat.Nama_buku ,&cat.Nama_peminjam); err != nil {
-		panic(err)
-	}
-	return cat
-}
-
-func Delete(id int) error  {
-	_, err := config.DB.Exec("DELETE FROM tugas2 WHERE ID = ? " ,id)
-
+func Delete(id int) error {
+	_, err := config.DB.Exec("DELETE FROM users WHERE ID = ?", id)
 	return err
+}
+
+func GetImagePath(id int) (string, error) {
+	row := config.DB.QueryRow("SELECT Gambar FROM users WHERE ID = ?", id)
+
+	var imagePath string
+	err := row.Scan(&imagePath)
+	if err != nil {
+		return "", err
+	}
+
+	return imagePath, nil
 }
