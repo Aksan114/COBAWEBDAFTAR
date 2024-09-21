@@ -9,7 +9,7 @@ import (
 var DB  *sql.DB
 
 func GetConnection() {
-	db, _ := sql.Open("mysql", "root:@tcp/pendaftaran?")
+	db, _ := sql.Open("mysql", "root:ojJmVodbLptqotLHyMyfCILelDATrjsL@tcp(mysql.railway.internal:3306)/pendaftaran?")
 
 	if err := db.Ping(); err != nil {
 		panic(err)
