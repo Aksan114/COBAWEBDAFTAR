@@ -9,7 +9,7 @@ import (
 var DB  *sql.DB
 
 func GetConnection() {
-	db, err := sql.Open("mysql", "root:qCNrNlUMyCCJFxufCseOPuMGXDCyRwGd@mysql.railway.internal:3306/railway")
+	db, err := sql.Open("mysql", "mysql://root:qCNrNlUMyCCJFxufCseOPuMGXDCyRwGd@mysql.railway.internal:3306/railway")
 
 	if err != nil {
 		panic(err)
